@@ -39,11 +39,23 @@ func TestUnwrapDefault(t *testing.T) {
 	}
 }
 
-func TestBind(T *testing.T) {
-	o := result.Ok[any, string]("Yes!")
+func TestBind(t *testing.T) {
+	o := result.Ok[string, any]("Yes!")
 
+	// Would be nice if we could use >>= or (.) chaining :(
 	m := result.Bind(o,
-		func 
+		func (a string) *result.Result[string, any] {
+			if a == "Yes!" {
+				return result.Ok[string, any]("We did it!")
+			} else {
+				return result.Ok[string, any]("We didn't do it!")
+			}
+		},
+	)
+
+	if m.Unwrap() != "We did it!" {
+		t.Fatal("Binding failed to return new result")
+	}
 }
 
 func TestMap(t *testing.T) {
