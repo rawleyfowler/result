@@ -1,5 +1,5 @@
 # result
-Simple implementation of the `Result` monad from OCaml.
+Simple implementation of the `Result` monad from OCaml. Mostly used as an introduction to Go generics.
 
 ## How to use
 Create a new result with `result.Error[T, G]` or `result.Ok[T, G]`.
